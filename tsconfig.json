@@ -1,0 +1,40 @@
+{
+    "compilerOptions":
+    {
+        "lib":
+        [
+            "DOM", "ESNext"
+        ],
+
+        "strict": true,
+        "allowJs": true,
+        "outDir": "Build",
+        "jsx": "react-jsx",
+        "module": "esnext",
+        "target": "esnext",
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "noImplicitThis": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "resolveJsonModule": true,
+        "preserveConstEnums": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include":
+    [
+        "Source"
+    ],
+    "exclude":
+    [
+        "Build",
+        "node_modules"
+    ]
+}
