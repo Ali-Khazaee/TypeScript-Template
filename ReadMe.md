@@ -18,7 +18,7 @@ A production-ready TypeScript web application template designed for rapid develo
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/Ali-Khazaee/TypeScript-Template.git
 2. Install the dependecies:
 
    ```bash
