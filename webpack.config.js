@@ -3,7 +3,7 @@ import PluginHtmlWebpack from 'html-webpack-plugin';
 /** @type { import('webpack').Configuration } */
 export default
 {
-    entry: `${ import.meta.dirname }/Source/UI/App.tsx`,
+    entry: `${ import.meta.dirname }/Source/App.tsx`,
     devServer:
     {
         hot: true,

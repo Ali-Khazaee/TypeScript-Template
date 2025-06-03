@@ -1,78 +1,94 @@
+import TypeScriptESLint from 'typescript-eslint';
+
 import PluginReact from 'eslint-plugin-react';
 import PluginUnicorn from 'eslint-plugin-unicorn';
 import PluginStylistic from '@stylistic/eslint-plugin';
-import TypeScriptParser from '@typescript-eslint/parser';
 import PluginReactHooks from 'eslint-plugin-react-hooks';
 import PluginTailwindCSS from 'eslint-plugin-tailwindcss';
-import PluginTypeScript from '@typescript-eslint/eslint-plugin';
 
-import { defineConfig, globalIgnores } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 
-export default defineConfig([
-    {
-        files:
-        [
-            '*.js',
-            '*.ts',
-            '*.tsx'
-        ],
-        languageOptions:
+export default defineConfig(
+    [
         {
-            parser: TypeScriptParser,
-            parserOptions:
+            ignores:
+            [
+                'Build/**',
+                'node_modules/**'
+            ],
+            files:
+            [
+                '**/*.{js,jsx,ts,tsx}'
+            ],
+            plugins:
+            {
+                react: PluginReact,
+                unicorn: PluginUnicorn,
+                '@stylistic': PluginStylistic,
+                tailwindcss: PluginTailwindCSS,
+                'react-hooks': PluginReactHooks,
+                '@typescript-eslint': TypeScriptESLint.plugin
+            },
+            languageOptions:
             {
                 sourceType: 'module',
                 ecmaVersion: 'latest',
-                ecmaFeatures:
+                parser: TypeScriptESLint.parser,
+                parserOptions:
                 {
-                    jsx: true
+                    projectService:
+                    {
+                        allowDefaultProject: [ '*.js' ]
+                    },
+                    ecmaFeatures:
+                    {
+                        jsx: true
+                    }
                 }
-            }
-        },
-        plugins:
-        {
-            react: PluginReact,
-            unicorn: PluginUnicorn,
-            '@stylistic': PluginStylistic,
-            tailwindcss: PluginTailwindCSS,
-            'react-hooks': PluginReactHooks,
-            '@typescript-eslint': PluginTypeScript
-        },
-        settings:
-        {
-            react:
+            },
+            extends:
+            [
+                '@typescript-eslint/all'
+            ],
+            settings:
             {
-                version: 'detect'
+                react:
+                {
+                    version: 'detect'
+                }
+            },
+            rules:
+            {
+                ...PluginReact.configs.all.rules,
+                ...PluginUnicorn.configs.all.rules,
+                ...PluginStylistic.configs.all.rules,
+                ...TypeScriptESLint.configs.all.rules,
+                ...PluginReactHooks.configs.recommended.rules,
+                ...PluginTailwindCSS.configs.recommended.rules,
+
+                '@typescript-eslint/no-magic-numbers': 0,
+                '@typescript-eslint/naming-convention': 0,
+                '@typescript-eslint/no-unsafe-assignment': 0,
+
+                'unicorn/empty-brace-spaces': 0,
+
+                '@stylistic/linebreak-style': 0,
+
+                '@stylistic/indent': [ 2, 4 ],
+                '@stylistic/semi': [ 2, 'always' ],
+                '@stylistic/quotes': [ 2, 'single' ],
+                '@stylistic/padded-blocks': [ 2, 'never' ],
+                '@stylistic/quote-props': [ 2, 'as-needed' ],
+                '@stylistic/object-curly-spacing': [ 2, 'always' ],
+                '@stylistic/array-bracket-spacing': [ 2, 'always' ],
+                '@stylistic/template-curly-spacing': [ 2, 'always' ],
+                '@stylistic/array-element-newline': [ 2, 'consistent' ],
+                '@stylistic/array-bracket-newline': [ 2, 'consistent' ],
+                '@stylistic/function-paren-newline': [ 2, 'consistent' ],
+                '@stylistic/brace-style': [ 2, 'allman', { allowSingleLine: false } ],
+                '@stylistic/object-curly-newline': [ 2, { multiline: true, consistent: true } ],
+                '@stylistic/object-property-newline': [ 2, { allowAllPropertiesOnSameLine: true } ]
             }
-        },
-        rules:
-        {
-            ...PluginUnicorn.configs.all.rules,
-            ...PluginStylistic.configs.all.rules,
-            ...PluginReact.configs.flat['all'].rules,
-            ...PluginTailwindCSS.configs['recommended'].rules,
-            ...PluginReactHooks.configs['recommended-latest'].rules,
-
-            '@stylistic/linebreak-style': 0,
-
-            '@stylistic/semi': [ 2, 'always' ],
-            '@stylistic/quotes': [ 2, 'single' ],
-            '@stylistic/padded-blocks': [ 2, 'never' ],
-            '@stylistic/quote-props': [ 2, 'as-needed' ],
-            '@stylistic/object-curly-spacing': [ 2, 'always' ],
-            '@stylistic/array-bracket-spacing': [ 2, 'always' ],
-            '@stylistic/template-curly-spacing': [ 2, 'always' ],
-            '@stylistic/array-element-newline': [ 2, 'consistent' ],
-            '@stylistic/array-bracket-newline': [ 2, 'consistent' ],
-            '@stylistic/space-before-function-paren': [ 2, 'never' ],
-            '@stylistic/multiline-ternary': [ 2, 'always-multiline' ],
-            '@stylistic/nonblock-statement-body-position': [ 2, 'below' ],
-            '@stylistic/function-call-argument-newline': [ 2, 'consistent' ],
-            '@stylistic/brace-style': [ 2, 'allman', { allowSingleLine: false } ],
-            '@stylistic/no-multiple-empty-lines': [ 2, { max: 1, maxEOF: 0, maxBOF: 0 } ],
-            '@stylistic/object-property-newline': [ 2, { allowAllPropertiesOnSameLine: true } ]
         }
-    },
-
-    globalIgnores([ 'Build/*', 'node_modules/*' ])
-]);
+    ]
+);
